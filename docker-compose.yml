@@ -18,7 +18,7 @@ services:
       - DISPLAY=:99
     volumes:
       - ./src/:/app/src/
-      - ./profile/:/app/profile/
+      - ./profile/:/app/profile/:ro
       - ./out/:/app/out/
     networks:
       - selenium-network
