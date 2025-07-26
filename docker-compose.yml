@@ -1,6 +1,6 @@
 services:
   selenium-driver:
-    image: selenium/standalone-chrome:latest
+    image: selenium/standalone-firefox:latest
     container_name: selenium-driver
     ports:
       - "4444:4444"
@@ -18,11 +18,14 @@ services:
       - DISPLAY=:99
     volumes:
       - ./src/:/app/src/
-      - ./config.ini:/app/config.ini
+      - ./profile/:/app/profile/
       - ./out/:/app/out/
     networks:
       - selenium-network
-    command: python src/test.py
+    stdin_open: true
+    tty: true
+    #command: tail -f /dev/null
+    command: python src/main.py
 
 networks:
   selenium-network:
