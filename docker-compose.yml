@@ -1,0 +1,29 @@
+services:
+  selenium-driver:
+    image: selenium/standalone-chrome:latest
+    container_name: selenium-driver
+    ports:
+      - "4444:4444"
+    networks:
+      - selenium-network
+
+  selenium:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: selenium
+    depends_on:
+      - selenium-driver
+    environment:
+      - DISPLAY=:99
+    volumes:
+      - ./src/:/app/src/
+      - ./config.ini:/app/config.ini
+      - ./out/:/app/out/
+    networks:
+      - selenium-network
+    command: python src/test.py
+
+networks:
+  selenium-network:
+    driver: bridge
